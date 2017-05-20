@@ -1,5 +1,5 @@
 <template>
-    <md-button @click.native="getMsg">hello {{ word }}</md-button>
+    <md-button @click.native="getMsg">hello javascript {{ word }}</md-button>
 </template>
 
 <script>

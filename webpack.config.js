@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const { resolve } = require('path')
 
 module.exports = {
     entry: [
@@ -53,4 +54,8 @@ module.exports = {
     performance: {
         hints: false
     }
+}
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports.output.path = resolve(__dirname, './dist')
 }
