@@ -6,7 +6,7 @@ module.exports = {
         './src/main.js',
     ],
     output: {
-        publicPath: '/dist',
+        publicPath: '/dist/',  // slash is essential here
         filename: 'bundle.js',
     },
     module: {
@@ -21,6 +21,10 @@ module.exports = {
                 loader: 'style-loader!css-loader'
             },
             {
+                test: /\.scss$/,
+                loader: 'style-loader!css-loader!sass-loader'
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
@@ -31,7 +35,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpg|png|gif|svg)$/,
+                test: /\.(jpg|png|gif|svg|woff|woff2|eot|ttf)$/,
                 loader: 'url-loader?limit=10000&name=[hash:base64:10].[ext]'
             }
         ]

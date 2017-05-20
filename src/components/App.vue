@@ -1,5 +1,8 @@
 <template>
-    <md-button @click.native="getMsg">hello javascript {{ word }}</md-button>
+    <div>
+        <md-button @click.native="getMsg">hello javascript {{ word }}</md-button>
+        <md-button class="md-warn md-icon-button"><md-icon>more_vert</md-icon></md-button>
+    </div>
 </template>
 
 <script>
