@@ -1,6 +1,6 @@
 const Crawler = require('crawler')
 const axios = require('axios')
-const conncton = require('./database')
+const connction = require('./database')
 
 let collector = new Crawler()
 
@@ -32,7 +32,7 @@ let toutiao = axios.get(uris.toutiao, {
 let yidian = axios.get(uris.yidian)
 
 async function store() {
-    let [toutiaoRes, yidianRes, conn] = await Promise.all([toutiao, yidian, conncton])
+    let [toutiaoRes, yidianRes, conn] = await Promise.all([toutiao, yidian, connction])
     //let toutiaoRes = await toutiao
 
     let sql = `INSERT INTO news (id, title, url, timeline, category, summary, tags, source, image, origin)
@@ -72,13 +72,14 @@ async function store() {
             let imageUrl = typeof item.image === 'undefined'
                 ? null : item.image.indexOf('http') !== -1
                     ? item.image : ('http://i1.go2yd.com/image.php?url=' + item.image)
+            let category = item.category.split(',')[0]
 
             let insData = [
                 item.docid,
                 item.title,
                 item.url,
                 item.date,
-                item.category,
+                category,
                 item.summary,
                 JSON.stringify([item.category]),
                 item.source,
