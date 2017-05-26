@@ -1,13 +1,18 @@
 <template>
-    <div>
-        <md-tabs class="md-transparent" md-fixed>
-            <md-tab v-for="(item, index) in categories"
-                    :key="index"
-                    :md-label="item.category">
-                {{ item.category }}
-            </md-tab>
-        </md-tabs>
-    </div>
+    <v-container fluid>
+        <v-layout row wrap class="choice">
+            <v-flex xs1
+                    v-for="(item, index) in cats"
+                    :key="index">
+                <router-link :to="'/cat/' + item.category">
+                    <v-btn>
+                        {{ item.category }}
+                    </v-btn>
+                </router-link>
+            </v-flex>
+        </v-layout>
+        <router-view></router-view>
+    </v-container>
 </template>
 
 <script>
@@ -16,18 +21,28 @@
     export default {
         name: 'display',
         data: () => ({
-            response: []
+            cats: [],
         }),
         created () {
-            axios.get('/category').then(response => {
-                console.log(response.data)
-                this.response = response.data
+            axios.get('/category').then(res => {
+                this.cats = res.data
+            }).catch(err => {
+                console.log(err)
             })
         },
+        methods: {
+        },
         computed: {
-            categories () {
-                return this.response
-            }
         }
     }
 </script>
+
+<style lang="scss">
+    .choice {
+        font-size: 10px;
+    }
+    .router-link-active {
+        color: deeppink;
+        background-color: deeppink;
+    }
+</style>

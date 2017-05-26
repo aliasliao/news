@@ -15,6 +15,13 @@ router.get('/', async (ctx, next) => {
     let [rows] = await conn.query(sql).catch(err => { console.log(err) })
     ctx.body = JSON.stringify(rows)
     await next()
+}).get('/cat/:name', async (ctx, next) => {
+    let conn = await connection
+    let name = decodeURI(ctx.params.name)
+    let sql =  `SELECT * FROM news WHERE category='${name}' ORDER BY timeline DESC`
+    let [rows] = await conn.query(sql).catch(err => { console.log('>>' + err) })
+    ctx.body = rows
+    await next()
 })
 
 module.exports = router

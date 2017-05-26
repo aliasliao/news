@@ -11,7 +11,7 @@ const PUBLIC = resolve(ROOT, './')  // serve static file here
 const PORT = 3000
 
 app.use(async (ctx, next) => {
-    ctx.myLog = `[${new Date().toLocaleTimeString()}] ${ctx.method} ${ctx.path} => `
+    ctx.myLog = `[${new Date().toLocaleTimeString()}] ${ctx.method} ${decodeURI(ctx.path)} => `
     await next()
     console.log(ctx.myLog)
 })
