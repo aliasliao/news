@@ -1,8 +1,9 @@
-const Crawler = require('crawler')
+//const Crawler = require('crawler')
 const axios = require('axios')
+const moment = require('moment')
 const connction = require('./database')
 
-let collector = new Crawler()
+/*let collector = new Crawler()
 
 function uri2Res (uri) {
     return new Promise((resolve, reject) => {
@@ -19,7 +20,7 @@ function uri2Res (uri) {
             }
         }])
     })
-}
+}*/
 
 const uris = {
     toutiao: 'http://www.toutiao.com/api/pc/feed/?category=news_hot',
@@ -30,6 +31,9 @@ let toutiao = axios.get(uris.toutiao, {
     headers: { 'Cookie': 'tt_webid=6416947689493251585' }   // important: avoid getting identical result
 })
 let yidian = axios.get(uris.yidian)
+
+let addCnt1=0, dupCnt1=0
+let addCnt2=0, dupCnt2=0
 
 async function store() {
     let [toutiaoRes, yidianRes, conn] = await Promise.all([toutiao, yidian, connction])
@@ -56,10 +60,16 @@ async function store() {
             ]
 
             conn.query(sql, insData)
+                .then(() => {
+                    addCnt1++
+                })
                 .catch(err => {
-                    console.log(err.code, err.message)
                     if (err.code !== 'ER_DUP_ENTRY') {
-                        console.log(insData[0])
+                        console.log(err.code, err.message)
+                        console.log('->' + insData[0])
+                    }
+                    else {
+                        dupCnt1++
                     }
                 })
         }
@@ -88,20 +98,40 @@ async function store() {
             ]
 
             conn.query(sql, insData)
+                .then(() => {
+                    addCnt2++
+                })
                 .catch(err => {
-                    console.log(err.code, err.message)
                     if (err.code !== 'ER_DUP_ENTRY') {
+                        console.log(err.code, err.message)
                         console.log('-> ' + insData[0])
+                    }
+                    else {
+                        dupCnt2++
                     }
                 })
         }
     })
 
+
+    // clean old news
+    let oldDate = moment().subtract(7, 'days').format('YYYY-MM-DD')
+    let cleanSql = `DELETE FROM news WHERE timeline<'${oldDate}'`
+    conn.query(cleanSql)
+        .then(([result]) => {
+            console.log(`[clean] ${result.affectedRows} rows cleaned`)
+        })
+        .catch(err => {
+            console.log(err.code, err.message)
+        })
+
     await conn.end()  // important!!!
     return 'succ'
 }
 store().then(res => {
-    console.log(res)
+    console.log(`[toutiao] ${addCnt1} rows added, ${dupCnt1} rows duplicated`)
+    console.log(`[yidian] ${addCnt2} rows added, ${dupCnt2} rows duplicated`)
+    console.log(`[${new Date().toLocaleString()}] ${res}`)
 }).catch(err => {
     console.log((err))
 })

@@ -10,11 +10,11 @@
                                 <img :src="item.image" width="120px" height="80px" alt="Image Not Found">
                             </v-flex>
                             <v-flex md7 class="pt-1">
-                                <div class="title mb-1">{{ item.title }}</div>
+                                <div class="title mb-1" @click="openTab(item.url)">{{ item.title }}</div>
                                 <div class="summary">{{ item.summary }}</div>
                             </v-flex>
                             <v-flex md2 class="but pl-5">
-                                <div :title="item.timeline" class="time">{{ parseTime(item.timeline) }}</div>
+                                <div :title="new Date(item.timeline).toLocaleString()" class="time">{{ parseTime(item.timeline) }}</div>
                                 <div class="source">{{ item.source }}</div>
                             </v-flex>
                         </v-layout>
@@ -58,7 +58,10 @@
         },
         methods: {
             parseTime (time) {
-                return moment(time).fromNow()
+                return moment(time).locale('zh-cn').fromNow()
+            },
+            openTab (url) {
+                window.open(url)
             }
         },
         watch: {
