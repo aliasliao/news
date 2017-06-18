@@ -50,7 +50,7 @@ async function store() {
                 item.group_id,
                 item.title,
                 'http://www.toutiao.com' + item.source_url,
-                new Date(Number(item.behot_time + '000')).toString(),
+                moment(Number(item.behot_time + '000')).format('YYYY-MM-DD hh:mm:ss'),
                 item.chinese_tag,
                 item.abstract,
                 JSON.stringify([item.chinese_tag]),
