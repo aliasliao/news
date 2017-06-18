@@ -50,7 +50,7 @@ async function store() {
                 item.group_id,
                 item.title,
                 'http://www.toutiao.com' + item.source_url,
-                new Date(Number(item.behot_time + '000')).toLocaleString(),
+                new Date(Number(item.behot_time + '000')).toString(),
                 item.chinese_tag,
                 item.abstract,
                 JSON.stringify([item.chinese_tag]),
@@ -132,6 +132,7 @@ store().then(res => {
     console.log(`[toutiao] ${addCnt1} rows added, ${dupCnt1} rows duplicated`)
     console.log(`[yidian] ${addCnt2} rows added, ${dupCnt2} rows duplicated`)
     console.log(`[${new Date().toLocaleString()}] ${res}`)
+    console.log('****************************************\n')
 }).catch(err => {
     console.log((err))
 })
