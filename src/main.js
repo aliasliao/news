@@ -1,15 +1,25 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+//import 'roboto-fontface/css/roboto/sass/roboto-fontface.scss'
+//import 'material-design-icons-iconfont/dist/material-design-icons.scss'
 
 import App from './components/App.vue'
+import Display from './components/Display.vue'
 import List from './components/List.vue'
+import Article from './components/Article.vue'
 
 Vue.use(VueRouter)
 Vue.use(ElementUI)
 
 const routes = [
-    { path: '/cat/:name', component: List }
+    { path: '/display', component: Display,
+        children: [
+            { path: 'cat/:name', component: List },
+            { path: 'article/:id', component: Article },
+        ]
+    }
 ]
 const router = new VueRouter({ routes })
 

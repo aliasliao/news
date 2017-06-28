@@ -1,18 +1,14 @@
 <template>
-    <v-container fluid>
-        <v-layout row wrap class="choice">
-            <v-flex xs1
-                    v-for="(item, index) in cats"
-                    :key="index">
-                <router-link :to="'/cat/' + item.category">
-                    <v-btn>
-                        {{ item.category }}
-                    </v-btn>
-                </router-link>
-            </v-flex>
-        </v-layout>
+    <div>
+        <el-menu mode="horizontal" :default-active="defaultActive" router>
+            <el-menu-item v-for="(item, index) in cats"
+                          :key="index"
+                          :index="'/display/cat/' + item.category">
+                {{ item.category }}
+            </el-menu-item>
+        </el-menu>
         <router-view></router-view>
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -22,6 +18,7 @@
         name: 'display',
         data: () => ({
             cats: [],
+            defaultActive: '/cat/财经'
         }),
         created () {
             axios.get('/category').then(res => {
@@ -33,14 +30,13 @@
         methods: {
         },
         computed: {
+        },
+        watch: {
         }
     }
 </script>
 
-<style lang="scss">
-    .choice {
-        font-size: 10px;
-    }
+<style lang="scss" scoped>
     .router-link-active {
         color: deeppink;
         background-color: deeppink;

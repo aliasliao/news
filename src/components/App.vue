@@ -1,14 +1,18 @@
 <template>
-    <v-app>
-        <v-toolbar>
-            <v-toolbar-side-icon> light</v-toolbar-side-icon>
-            <v-toolbar-title>二点资讯</v-toolbar-title>
-            <v-text-field prepend-icon="search" label="Search..."
-                          hide-details single-line light></v-text-field>
-            <v-icon light>info</v-icon>
-        </v-toolbar>
-        <display></display>
-    </v-app>
+    <div>
+        <el-menu :default-ctive="defaultRoute" class="navigate" theme="dark" mode="horizontal" router>
+            <el-row>
+                <el-col :xs="{span:8}" :sm="{span:4}">
+                    <el-menu-item :index="defaultRoute" class="logo">新闻资讯</el-menu-item>
+                </el-col>
+                <el-col :xs="{span:8, offset:8}" :sm="{span:4, offset:16}">
+                    <el-menu-item index="2">注册</el-menu-item>
+                    <el-menu-item index="3">登录</el-menu-item>
+                </el-col>
+            </el-row>
+        </el-menu>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
@@ -16,8 +20,10 @@
 
     export default {
         name: 'app',
-        components: {Display},
+        components: {
+        },
         data: () => ({
+            defaultRoute: '/display'
         }),
         created () {
         },
@@ -26,5 +32,12 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+    .navigate {
+        padding: 1em;
+
+        .logo {
+            font-size: 2em;
+        }
+    }
 </style>

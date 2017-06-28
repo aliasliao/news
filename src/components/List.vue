@@ -1,34 +1,33 @@
 <template>
     <div>
-        <v-list three-line>
-            <v-list-item v-for="(item, index) in currentList"
-                         :key="index">
-                <v-list-tile ripple class="mt-2">
-                    <v-container fluid>
-                        <v-layout row>
-                            <v-flex md2 offset-md1>
-                                <img :src="item.image" width="120px" height="80px" alt="Image Not Found">
-                            </v-flex>
-                            <v-flex md7 class="pt-1">
-                                <div class="title mb-1" @click="openTab(item.url)">{{ item.title }}</div>
-                                <div class="summary">{{ item.summary }}</div>
-                            </v-flex>
-                            <v-flex md2 class="but pl-5">
-                                <div :title="new Date(item.timeline).toLocaleString()" class="time">{{ parseTime(item.timeline) }}</div>
-                                <div class="source">{{ item.source }}</div>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </v-list-tile>
-                <v-divider></v-divider>
-            </v-list-item>
-        </v-list>
-        <div class="pagination">
-            <v-pagination :length.number="page.total"
-                          v-model="page.current"
-                          class="mt-3">
-            </v-pagination>
-        </div>
+        <el-card v-for="(item, index) in currentList" :key="index">
+            <el-row :gutter="2">
+                <el-col :sm="{span:4, offset:3}"><img :src="item.image" alt="image not found"></el-col>
+                <el-col :sm="{span:12}">
+                    <el-row>
+                        <el-col class="title">
+                            <router-link :to="'/display/article/' + item.id">{{ item.title }}</router-link></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col class="abstract">{{ item.abstract }}</el-col>
+                    </el-row>
+                </el-col>
+                <el-col :sm="{span:2}" class="right">
+                    <div :span="24" class="source">{{ item.source }}</div>
+                    <div :span="24" class="time"
+                         :title="new Date(item.time).toLocaleString()">{{ parseTime(item.time) }}</div>
+                </el-col>
+            </el-row>
+        </el-card>
+
+        <el-pagination :page-sizes="[5, 10, 15, 20]"
+                       :page-size="this.page.one"
+                       :current-page="page.current"
+                       :page-count="page.total"
+                       @size-change="handleSizeChange"
+                       @current-change="handleCurrentChange"
+                       layout="sizes, prev, pager, next">
+        </el-pagination>
     </div>
 </template>
 
@@ -62,7 +61,18 @@
             },
             openTab (url) {
                 window.open(url)
+            },
+            handleSizeChange (val) {
+                this.page.current = 1
+                this.page.one = val
+                this.page.total = Math.ceil(this.list.length / this.page.one)
+            },
+            handleCurrentChange (val) {
+                this.page.current = val
             }
+        },
+        created () {
+            console.log('@_@list created' + this.$route.params.name)
         },
         watch: {
             cat (val) {
@@ -80,24 +90,29 @@
 
 <style lang="scss" scoped>
     .title {
-        font-size: 1.2em;
+        font-size: 1.3em;
         font-weight: bold;
         color: #444444;
     }
-    .summary {
+    .abstract {
+        margin-top: 0.5em;
         font-size: 0.9em;
         color: dimgray;
     }
-    .time {
-        color: red;
-    }
-    .source {
-        color: #1976d2;
-    }
-    .but {
+    .right {
+        height: 7em;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
+        align-items: center;
+
+        .source {
+            color: #1976d2;
+        }
+        .time {
+            margin-top: 0.5em;
+            color: red;
+        }
     }
     .pagination {
         display: flex;
