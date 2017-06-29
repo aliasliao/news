@@ -72,7 +72,14 @@
             }
         },
         created () {
-            console.log('@_@list created' + this.$route.params.name)
+            console.log('[@_@] a List is created')
+            axios.get(`/cat/${this.cat}`).then(res => {
+                this.list = res.data
+                this.page.current = 1
+                this.page.total = Math.ceil(res.data.length / this.page.one)
+            }).catch(err => {
+                console.log(err)
+            })
         },
         watch: {
             cat (val) {

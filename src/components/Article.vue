@@ -25,7 +25,7 @@
             article: {}
         }),
         created () {
-            console.log('@_@ an article is created')
+            console.log('[@_@] an Article is created')
             this.id = this.$route.params.id
 
             axios.get(`/news/${this.id}`).then(res => {
@@ -52,7 +52,7 @@
             text-align: center;
             .source {
                 margin-left: 0.2em;
-                margin-right: 0.6em;
+                margin-right: 1.5em;
             }
             .time {
                 margin-left: 0.2em;

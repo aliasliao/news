@@ -18,11 +18,14 @@
         name: 'display',
         data: () => ({
             cats: [],
-            defaultActive: '/cat/财经'
+            defaultActive: '/cat/'
         }),
         created () {
+            console.log('[@_@] a Display is created')
             axios.get('/category').then(res => {
                 this.cats = res.data
+                this.defaultActive = '/cat/' + this.cats[0].category
+                window.location.hash = '#/display/cat/' + this.cats[0].category
             }).catch(err => {
                 console.log(err)
             })
@@ -37,8 +40,8 @@
 </script>
 
 <style lang="scss" scoped>
-    .router-link-active {
-        color: deeppink;
-        background-color: deeppink;
-    }
+    /*.router-link-active {*/
+        /*color: deeppink;*/
+        /*background-color: deeppink;*/
+    /*}*/
 </style>

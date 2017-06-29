@@ -87,7 +87,7 @@ async function main() {
     }
 
     // clean old news
-    let oldDate = moment().subtract(7, 'days').format('YYYY-MM-DD')
+    let oldDate = moment().subtract(30, 'days').format('YYYY-MM-DD')  // remove news that is 30 days ago
     let cleanSql = `DELETE FROM news WHERE time<'${oldDate}'`
     conn.query(cleanSql)
         .then(([result]) => {
