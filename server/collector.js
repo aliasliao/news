@@ -97,6 +97,15 @@ async function main() {
             console.log(err.code, err.message)
         })
 
+    let countSql = `SELECT COUNT(*) AS count FROM news`
+    conn.query(countSql)
+        .then(([rows]) => {
+            console.log(`[count] ${rows[0].count} rows after cleaned`)
+        })
+        .catch(err => {
+            console.log(err.code, err.message)
+        })
+
     await conn.release()  // important!!!
     await pool.end();
     return '>_< successful'
