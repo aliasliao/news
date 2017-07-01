@@ -20,7 +20,8 @@
             </el-row>
         </el-card>
 
-        <el-pagination :page-sizes="[5, 10, 15, 20]"
+        <el-pagination class="pagination"
+                       :page-sizes="[5, 10, 15, 20]"
                        :page-size="this.page.one"
                        :current-page="page.current"
                        :page-count="page.total"
@@ -124,5 +125,6 @@
     .pagination {
         display: flex;
         justify-content: center;
+        margin-top: 1em;
     }
 </style>

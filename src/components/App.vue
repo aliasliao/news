@@ -38,8 +38,16 @@
             console.log('[@_@] an App is created')
             window.location.hash = '#/display'
 
-            axios.get('/get/username').then(res => {
-                this.$root.username = res.data
+            axios.get('/getUserInfo').then(res => {
+                this.$root.username = res.data.username
+                this.$root.email = res.data.email
+                this.$root.interest = res.data.interest
+                let habits = res.data.habit
+                let arr = []
+                for (let i in habits) {
+                    arr.push({cat: i, count: habits[i]})
+                }
+                this.$root.habit = arr.sort((h1, h2) => { return h2.count-h1.count })
             }).catch(err => {
                 console.log(err)
             })
@@ -51,8 +59,7 @@
         },
         methods: {
             logout () {
-                let username = this.$root.username
-                axios.get(`/logout/${username}`)
+                axios.get(`/logout`)
                     .then(res => {
                         if (res.data === 'success') {
                             this.$notify.success({

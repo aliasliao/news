@@ -33,7 +33,10 @@ let app = new Vue({
     el: '#app',
     router,
     data: {
-        username: ''
+        username: '',
+        email: '',
+        interest: [],
+        habit: []
     },
     render (h) {
         return h(App)
