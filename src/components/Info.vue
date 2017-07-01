@@ -3,21 +3,29 @@
         <el-col :span="12" :offset="6">
             <el-tabs v-model="activeName" type="card">
                 <el-tab-pane class="info" label="基本信息" name="first">
-                    <div class="header">注册信息</div>
-                    <dl>
-                        <dt>用户名</dt>
-                        <dd>{{ username }}</dd>
-                        <dt>电子邮箱</dt>
-                        <dd>{{ email }}</dd>
-                    </dl>
-                    <div class="header">已订阅</div>
-                    <ul>
-                        <li v-for="(cat, index) in checkedCats" :key="index">{{ cat }}</li>
-                    </ul>
-                    <div class="header">浏览习惯</div>
-                    <ol>
-                        <li v-for="(habit, index) in habit" :key="index">{{ habit.cat }} -> {{ habit.count }}</li>
-                    </ol>
+                    <el-row>
+                        <el-col :span="8">
+                            <div class="header">注册信息</div>
+                            <dl>
+                                <dt>用户名</dt>
+                                <dd>{{ username }}</dd>
+                                <dt>电子邮箱</dt>
+                                <dd>{{ email }}</dd>
+                            </dl>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="header">已订阅</div>
+                            <ul>
+                                <li v-for="(cat, index) in checkedCats" :key="index">{{ cat }}</li>
+                            </ul>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="header">浏览习惯</div>
+                            <ol>
+                                <li v-for="(habit, index) in habit" :key="index">{{ habit.cat }} -> {{ habit.count }}</li>
+                            </ol>
+                        </el-col>
+                    </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="订阅类别" name="second">
                     <el-checkbox-group class="checkboxGroup"
