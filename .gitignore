@@ -1,5 +1,6 @@
 node_modules/
 .idea/
 dist/
-server/database.js
+server/DATABASE.js
 stats.json
+src/images/
