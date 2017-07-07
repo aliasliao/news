@@ -9,7 +9,7 @@ let app = new Koa()
 
 const ROOT = resolve(__dirname, '../')  // project root
 const PUBLIC = resolve(ROOT, './')  // serve static file here
-const PORT = 3000
+const PORT = 3001
 
 app.use(bodyParser({
     enableTypes: ['json', 'form', 'text']
@@ -25,7 +25,7 @@ app.use(router.routes())
 
 app.use(async (ctx) => {
     if (fs.existsSync(join(PUBLIC, ctx.path))) {
-        await send(ctx, ctx.path, {root: PUBLIC})  // TODO: error file request will not popup
+        await send(ctx, ctx.path, {root: PUBLIC})
     }
     else {
         ctx.path = '[not a file]'
