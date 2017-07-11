@@ -9,7 +9,7 @@ let app = new Koa()
 
 const ROOT = resolve(__dirname, '../')  // project root
 const PUBLIC = resolve(ROOT, './')  // serve static file here
-const PORT = 3001
+const PORT = 3000
 
 app.use(bodyParser({
     enableTypes: ['json', 'form', 'text']

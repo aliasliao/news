@@ -46,7 +46,7 @@ module.exports = {
         }
     },
     devServer: {
-        noInfo: true,
+        noInfo: false,
         proxy: {
             '!(/)': 'http://localhost:3000'
         }
